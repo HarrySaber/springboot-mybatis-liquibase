@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd
+        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <changeSet id="t_inventory::create::20181018" author="D.king">
+        <createTable tableName="t_inventory">
+            <column name="id" type="varchar(60)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="sku" type="varchar(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="sku_name" type="varchar(20)"/>
+        </createTable>
+
+        <createIndex tableName="t_inventory" indexName="idx_t_inventory">
+            <column name="id"/>
+        </createIndex>
+
+    </changeSet>
+
+    <changeSet id="t_inventory_flow::create::20181018" author="D.king">
+        <createTable tableName="t_inventory_flow">
+            <column name="id" type="varchar(60)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="inventory_id" type="varchar(60)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="order_id" type="varchar(60)"></column>
+            <column name="inventory_status" type="varchar(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="create_time" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+            <column name="banlance_qty" type="int">
+            </column>
+            <column name="qty" type="int">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+
+        <createIndex tableName="t_inventory_flow" indexName="idx_t_inventory_flow">
+            <column name="inventory_id"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet id="t_user::create::20181018" author="D.king">
+        <createTable tableName="t_user">
+            <column name="id" type="varchar(60)">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="role_id" type="varchar(60)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="user_name" type="varchar(60)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="password" type="varchar(60)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="company_id" type="varchar(60)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <createIndex tableName="t_user" indexName="idx_t_user">
+            <column name="user_name"/>
+        </createIndex>
+        <addUniqueConstraint tableName="t_user" columnNames="user_name" constraintName="const_user"/>
+    </changeSet>
+
+    <changeSet id="t_order::create::20181018" author="D.king">
+        <createTable tableName="t_order">
+            <column name="order_id" type="varchar(60)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="tracking_number" type="varchar(60)">
+            </column>
+            <column name="type" type="varchar(20)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="create_time" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <createIndex tableName="t_order" indexName="idx_t_order">
+            <column name="order_id"/>
+        </createIndex>
+    </changeSet>
+
+    <changeSet id="t_order_outbound_detail::create::20181018" author="D.king">
+        <createTable tableName="t_order_outbound_detail">
+            <column name="order_id" type="varchar(60)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="sku" type="varchar(60)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="qty" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="unit_cost_price" type="double(16,2)">
+            </column>
+            <column name="unit_sale_price" type="double(16,2)">
+            </column>
+            <column name="total_cost" type="double(16,2)">
+            </column>
+            <column name="total_amount" type="double(16,2)">
+            </column>
+            <column name="create_time" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addUniqueConstraint tableName="t_order_outbound_detail" columnNames="order_id,sku" constraintName="const_order_outbound_detail"/>
+    </changeSet>
+
+    <changeSet id="t_order_inbound_detail::create::20181018" author="D.king">
+        <createTable tableName="t_order_inbound_detail">
+            <column name="order_id" type="varchar(60)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="sku" type="varchar(60)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="qty" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="banlance_qty" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="sell_qty" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="unit_cost_price" type="double(16,2)">
+            </column>
+            <column name="unit_sale_price" type="double(16,2)">
+            </column>
+            <column name="total_cost" type="double(16,2)">
+            </column>
+            <column name="total_amount" type="double(16,2)">
+            </column>
+            <column name="sell_out" type="boolean">
+                <constraints nullable="false"/>
+            </column>
+            <column name="create_time" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addUniqueConstraint tableName="t_order_inbound_detail" columnNames="order_id,sku" constraintName="const_order_inbound_detail"/>
+    </changeSet>
+
+    <changeSet id="t_outbound::create::20181018" author="D.king">
+        <createTable tableName="t_outbound">
+            <column name="id" type="varchar(60)">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="sku" type="varchar(60)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="qty" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="create_time" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="t_inbound::create::20181018" author="D.king">
+        <createTable tableName="t_inbound">
+            <column name="id" type="varchar(60)">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="sku" type="varchar(60)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="qty" type="int">
+                <constraints nullable="false"/>
+            </column>
+            <column name="create_time" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+
+</databaseChangeLog>
