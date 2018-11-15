@@ -1,10 +1,8 @@
-package cn.bonuli.configuration.interceptor;
+package cn.bonuli.interceptor;
 
-import cn.bonuli.values.LoginUser;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
-import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 

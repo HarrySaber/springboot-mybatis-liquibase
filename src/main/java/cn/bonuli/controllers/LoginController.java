@@ -1,6 +1,7 @@
 package cn.bonuli.controllers;
 
 import cn.bonuli.service.LoginService;
+import cn.bonuli.utils.RedisUtils;
 import cn.bonuli.values.LoginUser;
 import cn.bonuli.values.result.ResultData;
 import com.google.common.collect.Maps;
@@ -34,13 +35,18 @@ public class LoginController {
     @Autowired
     LoginService loginService;
 
+    @Autowired
+    RedisUtils redisUtils;
+
     @PostMapping("/login-in")
     @ResponseBody
     public ResultData login(HttpServletRequest request, @RequestParam("username") String username, @RequestParam("password") String password) {
         try {
-            test();
+            //test();
             logger.info("username:" + username);
             logger.info("password:" + password);
+
+            redisUtils.set(username,password);
             LoginUser loginUser = new LoginUser(username, password, null);
             if (loginService.login(loginUser, request.getSession())) {
                 Map<String, String> loginMap = Maps.newHashMap();
@@ -55,7 +61,7 @@ public class LoginController {
     }
 
 
-    private void test(){
+   /* private void test(){
         File file = new File("E:/pdf.pdf");
         logger.info("username:" + file.getPath());
         if (file.isFile() && file.exists()) {
@@ -85,7 +91,7 @@ public class LoginController {
             System.out.println("file is not a file or file is not existing!");
         }
 
-    }
+    }*/
 
 
    /* @GetMapping("/login")

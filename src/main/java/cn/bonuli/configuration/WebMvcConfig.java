@@ -1,6 +1,6 @@
 package cn.bonuli.configuration;
 
-import cn.bonuli.configuration.interceptor.LoginInterceptor;
+import cn.bonuli.interceptor.LoginInterceptor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.*;
 
